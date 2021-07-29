@@ -10,32 +10,19 @@ id_dich_vu int(10),
 ngay_lam_hop_dong date,
 ngay_ket_thuc date,
 tien_dat_coc int(10) )
-
 begin
-
 if ( id_nhan_vien in (select id_nhan_vien
 					from nhan_vien)
 	and id_khach_hang in (select id_khach_hang
 					from khach_hang)
     and id_dich_vu in (select id_dich_vu
-					from dich_vu) )
+					from dich_vu)
+	and (ngay_ket_thuc > ngay_lam_hop_dong) )
 then 
-
 insert into hop_dong ( id_nhan_vien,id_khach_hang,id_dich_vu,ngay_lam_hop_dong,ngay_ket_thuc,tien_dat_coc)
 values (id_nhan_vien,id_khach_hang,id_dich_vu,ngay_lam_hop_dong,ngay_ket_thuc,tien_dat_coc);
-
 else
-
-set id_nhan_vien = null;
-set	id_khach_hang = null;
-set id_dich_vu = null;
-
-insert into hop_dong ( id_nhan_vien,id_khach_hang,id_dich_vu,ngay_lam_hop_dong,ngay_ket_thuc,tien_dat_coc)
-values (id_nhan_vien,id_khach_hang,id_dich_vu,ngay_lam_hop_dong,ngay_ket_thuc,tien_dat_coc);
-
-
+SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Dữ liệu sai';
 end if ;
-
-end;
-
+end
 // delimiter ;

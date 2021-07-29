@@ -76,12 +76,12 @@ value
 ('Nước Uống',50,'USD','on'),
 ('Thuê Xe',300,'USD','on');
 
-insert into hop_dong(id_hop_dong,id_nhan_vien,id_khach_hang,id_dich_vu,ngay_lam_hop_dong,ngay_ket_thuc,tien_dat_coc)
+insert into hop_dong(id_nhan_vien,id_khach_hang,id_dich_vu,ngay_lam_hop_dong,ngay_ket_thuc,tien_dat_coc)
 value
-(1,1,1,'2020-12-11','2020-12-18',12121212,1231231231),
-(1,2,3,'2020-12-11','2020-12-18',12121212,1231231231),
-(2,1,3,'2020-12-11','2020-12-18',12121212,1231231231),
-(3,3,3,'2020-12-11','2020-12-18',12121212,1231231231);
+(1,1,1,'2020-12-11','2020-12-18',12121212),
+(1,2,3,'2020-12-11','2020-12-18',12121212),
+(2,1,3,'2020-12-11','2020-12-18',12121212),
+(3,3,3,'2020-12-11','2020-12-18',12121212);
 
 insert into hop_dong_chi_tiet(id_hop_dong,id_dich_vu_di_kem,so_luong)
 value
