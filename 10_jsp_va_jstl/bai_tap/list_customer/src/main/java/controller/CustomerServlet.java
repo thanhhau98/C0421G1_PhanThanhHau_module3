@@ -1,3 +1,7 @@
+package controller;
+
+import model.bean.Customer;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "CustomerServlet" , urlPatterns = {"/list" , ""})
+@WebServlet(name = "CustomerServlet" , urlPatterns = {"" , "/list"})
 public class CustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

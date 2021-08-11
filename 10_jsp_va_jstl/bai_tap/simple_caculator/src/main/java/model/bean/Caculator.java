@@ -1,3 +1,5 @@
+package model.bean;
+
 public class Caculator {
      private float FirstOperand ;
      private  float SecondOperand ;

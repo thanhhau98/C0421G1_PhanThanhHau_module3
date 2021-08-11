@@ -1,3 +1,5 @@
+package model.bean;
+
 public class Customer {
     private String name;
     private String dateOfBirth;

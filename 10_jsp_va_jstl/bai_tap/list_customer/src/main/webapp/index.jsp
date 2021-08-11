@@ -9,7 +9,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <html>
   <head>
-    <title>Customer List</title>
+    <title>model.bean.Customer List</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   
