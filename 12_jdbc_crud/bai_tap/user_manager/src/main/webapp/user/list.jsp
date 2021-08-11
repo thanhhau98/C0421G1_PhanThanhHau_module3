@@ -20,6 +20,9 @@
     <h2>
         <a href="/users?action=create">Add New User</a>
     </h2>
+    <h2>
+        <a href="/users?action=order">Oder By Name</a>
+    </h2>
     <div align="center">
         <form method="get" action="/users">
             <input type="hidden" name="action" value="search" />

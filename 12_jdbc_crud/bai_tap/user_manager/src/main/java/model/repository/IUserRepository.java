@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IUserRepository {
 
+    List<User> orderByName();
+
     List<User> findByCountry(String country);
 
     List<User> findAll();

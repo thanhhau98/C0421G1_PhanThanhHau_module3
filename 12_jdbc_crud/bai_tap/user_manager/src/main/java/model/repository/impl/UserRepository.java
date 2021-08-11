@@ -15,6 +15,36 @@ public class UserRepository implements IUserRepository {
     private BaseRepository baseRepository = new BaseRepository();
 
     @Override
+    public List<User> orderByName() {
+        List<User> userList = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = this.baseRepository.getConnection().prepareStatement(
+                    "select * \n" +
+                            "from users\n" +
+                            "order by `name`;"
+            );
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            User user ;
+
+            while (resultSet.next()){
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setCountry(resultSet.getString("country"));
+
+                userList.add(user);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return userList;
+    }
+
+    @Override
     public List<User> findByCountry(String country) {
 
         List<User> userList = new ArrayList<>();

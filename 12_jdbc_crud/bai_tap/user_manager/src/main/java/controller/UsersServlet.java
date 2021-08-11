@@ -86,11 +86,25 @@ public class UsersServlet extends HttpServlet {
             case "search":
                 searchCustomer(request, response);
                 break;
+            case "order":
+                oderByName(request, response);
+                break;
             default:
                 listCustomers(request, response);
                 break;
         }
 
+    }
+
+    private void oderByName(HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("userList" , this.userService.orderByName());
+        try {
+            request.getRequestDispatcher("user/list.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void searchCustomer(HttpServletRequest request, HttpServletResponse response) {

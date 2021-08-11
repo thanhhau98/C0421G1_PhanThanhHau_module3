@@ -12,6 +12,11 @@ public class UserService implements IUserService {
     IUserRepository userRepository = new UserRepository();
 
     @Override
+    public List<User> orderByName() {
+        return userRepository.orderByName();
+    }
+
+    @Override
     public List<User> findByCountry(String country) {
         return userRepository.findByCountry(country);
     }
