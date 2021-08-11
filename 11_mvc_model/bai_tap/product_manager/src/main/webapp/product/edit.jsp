@@ -6,34 +6,34 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <html>
 <head>
-    <title>Customer Edit</title>
+    <title>Product Edit</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
 <h1>Product Edit</h1>
+<a class="btn btn-primary" href="/products" role="Back">Back</a>
 <p>
     <c:if test="${message != null}">
         <span >${message}</span>
     </c:if>
 </p>
-<div class="container">
-    <form>
-        <div class="form-group row">
-            <label for="inputName" class="col-sm-1-12 col-form-label"></label>
-            <div class="col-sm-1-12">
-                <input type="text" class="form-control" name="name" id="inputName"  value="${product.name}">
-            </div>
-            <div class="col-sm-1-12">
-                <input type="text" class="form-control" name="price"  value="${product.price}">
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="offset-sm-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Action</button>
-            </div>
-        </div>
-    </form>
-</div>
+<form action="/products" method="post">
+    <input hidden name="action" value="edit">
+    <input hidden name="id" value="${product.id}">
+    <div class="form-group">
+        <label >Name</label>
+        <input type="text" class="form-control" name="name" value="${product.name}">
+    </div>
+    <div class="form-group">
+        <label >Price</label>
+        <input type="text" class="form-control" name="price" value="${product.price}">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Update</button>
+    </div>
+</form>
 </body>
 </html>

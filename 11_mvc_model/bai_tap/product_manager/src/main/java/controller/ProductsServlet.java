@@ -7,10 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-@javax.servlet.annotation.WebServlet(name = "ProductsServlet" , urlPatterns = "/products")
-public class ProductsServlet extends javax.servlet.http.HttpServlet {
+@javax.servlet.annotation.WebServlet(name = "ProductsServlet" , urlPatterns = {"/products" ,""})
+public class  ProductsServlet extends javax.servlet.http.HttpServlet {
 
 private IProductService productService = new ProductService();
 
@@ -26,50 +27,45 @@ private IProductService productService = new ProductService();
             case "edit":
                 updateProduct(request, response);
                 break;
-            case "delete":
-                deleteProduct(request, response);
+            case "search":
+                searchProduct(request, response);
                 break;
             default:
+                listProducts(request,response);
                 break;
         }
     }
 
-    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        productService.remove(id);
+    private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("name");
+        List<Product> products = productService.findByName(name);
+        request.setAttribute("products" , products);
         try {
-            response.sendRedirect("/products");
+            request.getRequestDispatcher("product/list.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     private void updateProduct(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         float price = Float.parseFloat(request.getParameter("price"));
         Product product = this.productService.findById(id);
-
-        if(product == null){
-            try {
-                response.sendRedirect("eror.jsp");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            product.setName(name);
-            product.setPrice(price);
-
-            productService.update(id, product);
-            request.setAttribute("customer", product);
-            request.setAttribute("message", "Customer information was updated");
-            try {
-                request.getRequestDispatcher("customer/edit.jsp").forward(request,response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        product.setName(name);
+        product.setPrice(price);
+        productService.update(id, product);
+        request.setAttribute("product", product);
+        request.setAttribute("message", "Product information was updated");
+        try {
+            request.getRequestDispatcher("product/edit.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -77,7 +73,6 @@ private IProductService productService = new ProductService();
         int id =Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         float price = Float.parseFloat(request.getParameter("price"));
-
         Product product = new Product( id, name,price);
         productService.save(product);
 
@@ -104,7 +99,7 @@ private IProductService productService = new ProductService();
                 showEditForm(request, response);
                 break;
             case "delete":
-                showDeleteForm(request, response);
+                deleteProduct(request, response);
                 break;
             case "view":
                 viewProduct(request, response);
@@ -115,16 +110,22 @@ private IProductService productService = new ProductService();
         }
     }
 
-    private void viewProduct(HttpServletRequest request, HttpServletResponse response) {
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        productService.remove(id);
+        try {
+            response.sendRedirect("/products");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) {
+    private void viewProduct(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         Product product = productService.findById(id);
-
-        request.setAttribute("customer", product);
+        request.setAttribute("product", product);
         try {
-            request.getRequestDispatcher("customer/delete.jsp").forward(request,response);
+            request.getRequestDispatcher("product/view.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -135,22 +136,15 @@ private IProductService productService = new ProductService();
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         Product product = productService.findById(id);
-        if(product == null){
-            try {
-                response.sendRedirect("/eror.jsp");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            request.setAttribute("product", product);
-            try {
-                request.getRequestDispatcher("customer/edit.jsp").forward(request,response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        request.setAttribute("product", product);
+        try {
+            request.getRequestDispatcher("product/edit.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) {

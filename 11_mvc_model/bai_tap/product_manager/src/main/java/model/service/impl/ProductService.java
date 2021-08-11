@@ -38,6 +38,17 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<Product> findByName(String name) {
+        List<Product> productList = new ArrayList<>();
+        for (Product product : products.values()) {
+            if (product.getName().equals(name)) {
+                productList.add(product);
+            }
+        }
+        return productList;
+    }
+
+    @Override
     public void update(int id, Product product) {
         products.put(id , product);
     }

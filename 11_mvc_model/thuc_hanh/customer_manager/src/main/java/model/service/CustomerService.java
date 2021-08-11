@@ -9,9 +9,9 @@ public interface CustomerService {
 
     void save(Customer customer);
 
-    Customer findById(int id);
+    Customer findById(String id);
 
-    void update(int id, Customer customer);
+    void update(String id, Customer customer);
 
-    void remove(int id);
+    void remove(String id);
 }
